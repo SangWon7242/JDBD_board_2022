@@ -97,6 +97,36 @@ public class App {
         System.out.printf("%d / %s\n", article.id, article.title);
       }
 
+    } else if (rq.getUrlPath().equals("/usr/article/delete")) {
+      int id = rq.getIntParam("id", 0);
+
+      if (id == 0) {
+        System.out.println("id를 올바르게 입력해주세요.");
+        return;
+      }
+
+      System.out.println("== 게시글 삭제 ==");
+
+      SecSql sql = new SecSql();
+
+      sql.append("SELECT COUNT(*) AS cnt");
+      sql.append("FROM article");
+      sql.append("WHERE id = ?", id);
+      int articlesCount = DBUtil.selectRowIntValue(conn, sql);
+
+      if (articlesCount == 0) {
+        System.out.printf("%d번 게시물은 존재하지 않습니다.\n", id);
+        return;
+      }
+
+      sql = new SecSql();
+      sql.append("DELETE FROM article");
+      sql.append("WHERE id = ?", id);
+
+      DBUtil.delete(conn, sql);
+
+      System.out.printf("%d번 게시글이 삭제되었습니다.\n", id);
+
     } else if (rq.getUrlPath().equals("/usr/article/modify")) {
       int id = rq.getIntParam("id", 0);
 
