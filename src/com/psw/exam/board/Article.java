@@ -28,6 +28,8 @@ public class Article {
     this.id = (int) articleMap.get("id");
     this.title = (String) articleMap.get("title");
     this.body = (String) articleMap.get("body");
+    this.regDate = (String) articleMap.get("regDate");
+    this.updateDate = (String) articleMap.get("updateDate");
   }
 
   @Override
