@@ -1,8 +1,12 @@
 package com.psw.exam.board;
 
+import com.psw.exam.board.util.DBUtil;
+import com.psw.exam.board.util.SecSql;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 public class App {
@@ -55,61 +59,31 @@ public class App {
       System.out.printf("내용 : ");
       String body = sc.nextLine();
 
+      SecSql sql = new SecSql();
+      sql.append("INSERT INTO article");
+      sql.append("SET regDate = NOW()");
+      sql.append(", updateDate = NOW()");
+      sql.append(", title = ?", title);
+      sql.append(", `body` = ?", body);
 
-      PreparedStatement pstat = null;
+      int id = DBUtil.insert(conn, sql);
 
-      try {
+      System.out.printf("%d번 게시물이 생성되었습니다.\n", id);
 
-        String sql = "INSERT INTO article";
-        sql += " SET regDate = NOW()";
-        sql += ", updateDate = NOW()";
-        sql += ", title = \"" + title + "\"";
-        sql += ", `body` = \"" + body + "\";";
-
-        pstat = conn.prepareStatement(sql);
-        pstat.executeUpdate();
-
-      } catch (SQLException e) {
-        System.out.println("에러: " + e);
-      } finally {
-        try {
-          if (pstat != null && !pstat.isClosed()) {
-            pstat.close();
-          }
-        } catch (SQLException e) {
-          e.printStackTrace();
-        }
-      }
     } else if (rq.getUrlPath().equals("/usr/article/list")) {
       System.out.println("== 게시물 리스트 ==");
 
-      PreparedStatement pstat = null;
-      ResultSet rs = null;
-
       List<Article> articles = new ArrayList<>();
 
-      try {
+      SecSql sql = new SecSql();
+      sql.append("SELECT *");
+      sql.append("FROM article");
+      sql.append("ORDER BY id DESC");
 
-        String sql = "SELECT *";
-        sql += " FROM article";
-        sql += " ORDER BY id DESC";
+      List <Map<String, Object>> articleListMap = DBUtil.selectRows(conn, sql);
 
-        pstat = conn.prepareStatement(sql);
-        rs = pstat.executeQuery(sql);
-
-        while (rs.next()) {
-          int id = rs.getInt("id");
-          String regDate = rs.getString("regDate");
-          String updateDate = rs.getString("updateDate");
-          String title = rs.getString("title");
-          String body = rs.getString("body");
-
-          Article article = new Article(id, regDate, updateDate, title, body);
-          articles.add(article);
-        }
-
-      } catch (SQLException e) {
-        System.out.println("에러: " + e);
+      for(Map<String, Object> articleMap : articleListMap) {
+        articles.add(new Article(articleMap));
       }
 
       if (articles.size() == 0) {
@@ -136,22 +110,17 @@ public class App {
       System.out.printf("새 내용 : ");
       String body = sc.nextLine();
 
-      PreparedStatement pstat = null;
+      SecSql sql = new SecSql();
+      sql.append("UPDATE article");
+      sql.append("SET updateDate = NOW()");
+      sql.append(", title = ?", title);
+      sql.append(", `body` = ?", body);
+      sql.append("WHERE id = ?", id);
 
-      try {
+      DBUtil.update(conn, sql);
 
-        String sql = "UPDATE article";
-        sql += " SET updateDate = NOW()";
-        sql += ", title = \"" + title + "\"";
-        sql += ", `body` = \"" + body + "\"";
-        sql += " WHERE id = " + id;
+      System.out.println("게시물이 수정되었습니다.");
 
-        pstat = conn.prepareStatement(sql);
-        pstat.executeUpdate();
-
-      } catch (SQLException e) {
-        System.out.println("에러: " + e);
-      }
     } else if (cmd.equals("exit")) {
       System.out.println("== 시스템 종료 ==");
       System.exit(0);

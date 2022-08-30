@@ -1,8 +1,6 @@
-package com.psw.exam.board;
+package com.psw.exam.board.util;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class Util {

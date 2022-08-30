@@ -1,5 +1,7 @@
 package com.psw.exam.board;
 
+import java.util.Map;
+
 public class Article {
   int id;
   String regDate;
@@ -20,6 +22,12 @@ public class Article {
     this.id = id;
     this.title = title;
     this.body = body;
+  }
+
+  public Article(Map<String, Object> articleMap) {
+    this.id = (int) articleMap.get("id");
+    this.title = (String) articleMap.get("title");
+    this.body = (String) articleMap.get("body");
   }
 
   @Override
