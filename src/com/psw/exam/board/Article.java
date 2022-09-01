@@ -3,11 +3,11 @@ package com.psw.exam.board;
 import java.util.Map;
 
 public class Article {
-  int id;
-  String regDate;
-  String updateDate;
-  String title;
-  String body;
+  public int id;
+  public String regDate;
+  public String updateDate;
+  public String title;
+  public String body;
 
   public Article(int id, String regDate, String updateDate, String title, String body) {
     this.id = id;

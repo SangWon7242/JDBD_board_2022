@@ -1,23 +1,9 @@
 package com.psw.exam.board.controller;
 
-import com.psw.exam.board.Rq;
 import com.psw.exam.board.util.DBUtil;
 import com.psw.exam.board.util.SecSql;
 
-import java.sql.Connection;
-import java.util.Scanner;
-
-public class MemberController {
-  private Connection conn;
-  private Scanner sc;
-
-  public void setConn(Connection conn) {
-    this.conn = conn;
-  }
-
-  public void setScanner(Scanner sc) {
-    this.sc = sc;
-  }
+public class MemberController extends Controller {
   public void join() {
     String loginId;
     String loginPw;
