@@ -52,7 +52,86 @@ public class App {
   }
 
   private void doAction(Rq rq, Connection conn, Scanner sc, String cmd) {
-    if (rq.getUrlPath().equals("/usr/article/write")) {
+    if (rq.getUrlPath().equals("/usr/member/join")) {
+      String loginId;
+      String loginPw;
+      String loginPwConfirm;
+      String name;
+
+      System.out.println("== 회원 가입 ==");
+
+      // 로그인 아이디 입력
+      while(true) {
+        System.out.printf("로그인 아이디 : ");
+        loginId = sc.nextLine().trim();
+
+        if (loginId.length() == 0) {
+          System.out.println("로그인 아이디를 입력해주세요.");
+          continue;
+        }
+
+        break;
+      }
+
+      // 로그인 비번 입력
+      while (true) {
+        System.out.printf("로그인 비번 : ");
+        loginPw = sc.nextLine().trim();
+
+        if(loginPw.length() == 0) {
+          System.out.println("로그인 비번을 입력해주세요.");
+        }
+
+        boolean loginPwConfirmSame = true;
+
+        while (true) {
+          System.out.printf("로그인 비번확인 : ");
+          loginPwConfirm = sc.nextLine().trim();
+
+          if(loginPwConfirm.length() == 0) {
+            System.out.println("로그인 비번확인을 입력해주세요.");
+            continue;
+          }
+
+          if(loginPw.equals(loginPwConfirm) == false) {
+            System.out.println("로그인 비번이 일치하지 않습니다. 다시 입력해주세요.");
+            loginPwConfirmSame = false;
+            break;
+          }
+
+          break;
+        }
+
+        if(loginPwConfirmSame) {
+          break;
+        }
+      }
+
+      // 이름 입력
+      while (true) {
+        System.out.printf("이름 : ");
+        name = sc.nextLine().trim();
+
+        if(name.length() == 0) {
+          System.out.println("이름을 입력해주세요.");
+          continue;
+        }
+        break;
+      }
+
+      SecSql sql = new SecSql();
+      sql.append("INSERT INTO member");
+      sql.append("SET regDate = NOW()");
+      sql.append(", updateDate = NOW()");
+      sql.append(", loginId = ?", loginId);
+      sql.append(", loginPw = ?", loginPw);
+      sql.append(", `name` = ?", name);
+
+      DBUtil.insert(conn, sql);
+
+      System.out.printf("%s님 환영합니다.\n", name);
+
+    } else if (rq.getUrlPath().equals("/usr/article/write")) {
       System.out.println("== 게시물 등록 ==");
       System.out.printf("제목 : ");
       String title = sc.nextLine();
