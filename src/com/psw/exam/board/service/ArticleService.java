@@ -1,8 +1,7 @@
 package com.psw.exam.board.service;
 
-import com.psw.exam.board.Article;
+import com.psw.exam.board.dto.Article;
 import com.psw.exam.board.dao.ArticleDao;
-import com.psw.exam.board.dao.MemberDao;
 
 import java.sql.Connection;
 import java.util.List;

@@ -1,6 +1,6 @@
 package com.psw.exam.board.dao;
 
-import com.psw.exam.board.Article;
+import com.psw.exam.board.dto.Article;
 import com.psw.exam.board.util.DBUtil;
 import com.psw.exam.board.util.SecSql;
 

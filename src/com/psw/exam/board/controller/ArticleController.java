@@ -1,6 +1,6 @@
 package com.psw.exam.board.controller;
 
-import com.psw.exam.board.Article;
+import com.psw.exam.board.dto.Article;
 import com.psw.exam.board.Rq;
 import com.psw.exam.board.service.ArticleService;
 

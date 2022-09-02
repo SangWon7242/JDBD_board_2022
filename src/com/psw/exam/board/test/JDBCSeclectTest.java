@@ -1,6 +1,6 @@
 package com.psw.exam.board.test;
 
-import com.psw.exam.board.Article;
+import com.psw.exam.board.dto.Article;
 
 import java.sql.*;
 import java.util.ArrayList;
