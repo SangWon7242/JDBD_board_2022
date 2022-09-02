@@ -1,5 +1,6 @@
 package com.psw.exam.board.service;
 
+import com.psw.exam.board.Container;
 import com.psw.exam.board.dao.MemberDao;
 import com.psw.exam.board.dto.Member;
 
@@ -8,8 +9,8 @@ import java.sql.Connection;
 public class MemberService {
   private MemberDao memberDao;
 
-  public MemberService(Connection conn) {
-    memberDao = new MemberDao(conn);
+  public MemberService() {
+    memberDao = Container.memberDao;
   }
   public boolean isLoginedDup(String loginId) {
    return memberDao.isLoginedDup(loginId);

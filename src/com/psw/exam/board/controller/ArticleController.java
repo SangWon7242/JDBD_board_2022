@@ -1,5 +1,6 @@
 package com.psw.exam.board.controller;
 
+import com.psw.exam.board.Container;
 import com.psw.exam.board.dto.Article;
 import com.psw.exam.board.Rq;
 import com.psw.exam.board.service.ArticleService;
@@ -12,9 +13,8 @@ public class ArticleController extends Controller {
 
   private ArticleService articleService;
 
-  public ArticleController(Connection conn, Scanner sc, Rq rq) {
-    super(sc, rq);
-    articleService = new ArticleService(conn);
+  public ArticleController() {
+    articleService = Container.articleService;
   }
 
   public void add(String cmd) {
@@ -35,7 +35,6 @@ public class ArticleController extends Controller {
     List<Article> articles = articleService.getArticles();
 
 
-
     if (articles.size() == 0) {
       System.out.println("게시물이 존재하지 않습니다.");
       return;
@@ -49,7 +48,7 @@ public class ArticleController extends Controller {
   }
 
   public void showDetail(Rq rq, String cmd) {
-    int id = this.rq.getIntParam("id", 0);
+    int id = rq.getIntParam("id", 0);
 
     if (id == 0) {
       System.out.println("id를 올바르게 입력해주세요.");
@@ -71,7 +70,7 @@ public class ArticleController extends Controller {
   }
 
   public void delete(Rq rq, String cmd) {
-    int id = this.rq.getIntParam("id", 0);
+    int id = rq.getIntParam("id", 0);
 
     if (id == 0) {
       System.out.println("id를 올바르게 입력해주세요.");
@@ -93,7 +92,7 @@ public class ArticleController extends Controller {
   }
 
   public void modify(Rq rq, String cmd) {
-    int id = this.rq.getIntParam("id", 0);
+    int id = rq.getIntParam("id", 0);
 
     if (id == 0) {
       System.out.println("id를 올바르게 입력해주세요.");

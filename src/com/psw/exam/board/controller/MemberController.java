@@ -1,5 +1,6 @@
 package com.psw.exam.board.controller;
 
+import com.psw.exam.board.Container;
 import com.psw.exam.board.Rq;
 import com.psw.exam.board.service.MemberService;
 import com.psw.exam.board.dto.Member;
@@ -11,9 +12,8 @@ public class MemberController extends Controller {
 
   private MemberService memberService;
 
-  public MemberController(Connection conn, Scanner sc, Rq rq) {
-    super(sc, rq);
-    memberService = new MemberService(conn);
+  public MemberController() {
+    memberService = Container.memberService;
   }
 
   public void join() {
