@@ -47,10 +47,10 @@ public class ArticleController extends Controller {
       return;
     }
 
-    System.out.println("번호 / 제목");
+    System.out.println("번호 / 작성날짜 / 작성자 / 제목");
 
     for (Article article : articles) {
-      System.out.printf("%d / %s\n", article.id, article.title);
+      System.out.printf("%d / %s / %s / %s\n", article.id, article.regDate, article.extra__writer, article.title);
     }
   }
 
