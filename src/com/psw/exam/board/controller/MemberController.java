@@ -158,19 +158,21 @@ public class MemberController extends Controller {
 
       System.out.printf("%s님 환영합니다.\n", member.name);
 
-
-      Container.session.loginedMemberId = member.id;
-      Container.session.loginedMember = member;
+      Container.session.login(member);
 
       break;
     }
 
   }
   public void whoami() {
-    if (Container.session.loginedMemberId == -1) {
+    if (Container.session.isLogined() == false) {
       System.out.println("로그인 상태가 아닙니다.");
     } else {
       System.out.println(Container.session.loginedMember.loginId);
     }
+  }
+
+  public void logout() {
+    Container.session.logout();
   }
 }
