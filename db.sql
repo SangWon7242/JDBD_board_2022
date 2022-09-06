@@ -18,3 +18,23 @@ CREATE TABLE `member` (
 	loginPw CHAR(200) NOT NULL,
 	`name` CHAR(200) NOT NULL
 );
+
+
+# 임시 회원
+INSERT INTO `member`
+SET regDate = NOW(),
+updateDate = NOW(),
+loginId = 'test1',
+loginPw = 'test1',
+`name` = '홍길동';
+
+# 임시 회원
+INSERT INTO `member`
+SET regDate = NOW(),
+updateDate = NOW(),
+loginId = 'test2',
+loginPw = 'test2',
+`name` = '홍길순';
+
+# 게시물 테이블에 memberId 칼럼 추가
+ALTER TABLE article ADD COLUMN memberId INT(10) UNSIGNED NOT NULL AFTER updateDate;
